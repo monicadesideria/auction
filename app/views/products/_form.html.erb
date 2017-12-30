@@ -1,0 +1,39 @@
+<%= form_for @product do |f| %>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :detail %>
+      <%= f.text_area :detail, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :price %>
+      <%= f.number_field :price, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :start_time %>
+      <%= f.text_field :start_time, class: 'start_time_picker form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :end_time %>
+      <%= f.text_field :end_time, class: 'end_time_picker form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <%= f.label :images %>
+      <%= f.file_field :images, multiple: true, class: 'form-control' %>
+    </div>
+  </div>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

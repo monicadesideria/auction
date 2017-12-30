@@ -1,0 +1,117 @@
+<div class="container">
+  <table class="table">
+    <tr>
+      <td>Product Name</td>
+      <td><%= @product.name %></td>
+    </tr>
+    <tr>
+      <td>Product Detail</td>
+      <td><%= @product.detail %></td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td><%= @product.price %></td>
+    </tr>
+    <tr>
+      <td>End Time</td>
+      <td><div class="countdown"></div></td>
+    </tr>
+    <tr>
+      <td>Images</td>
+      <td>
+        <table class="table">
+          <tr>
+            <% @product.images.each do |image| %>
+                <td>
+                  <div class="image-wrapper">
+                    <%= image_tag image.thumb.url %>
+                  </div>
+                </td>
+            <% end %>
+          </tr>
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td>Place Bid</td>
+      <td>
+        <%= form_tag charges_path do %>
+          <div id="error_explanation">
+            <% if flash[:error].present? %>
+              <p><%= flash[:error] %></p>
+            <% end %>
+          </div>
+          <article>
+            <%= text_field_tag(:amount) %>
+          </article>
+          <article>
+            <%= hidden_field_tag(:stripeToken) %>
+            <%= hidden_field_tag(:product_id, @product.id) %>
+          </article>
+          <button id='bidButton' class='btn btn-primary'>Bid</button>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  <h3>Last 5 bidders</h3>
+  <table class="table">
+    <tr>
+      <td>Username</td>
+      <td>Bids</td>
+    </tr>
+    <% @bids.each do |bid| %>
+      <tr>
+        <td><%= translate_username(bid.user.username) %></td>
+        <td><%= bid.amount %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<script>
+  end_time = new Date(
+    parseInt(<%= @product.end_time.strftime("%Y") %>), 
+    parseInt(<%= @product.end_time.strftime("%_m") %>)-1, 
+    parseInt(<%= @product.end_time.strftime("%e") %>)
+  ); 
+  $('.countdown').countdown({until: end_time}); 
+</script>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+  var handler = StripeCheckout.configure({
+    key: '<%= Rails.configuration.stripe[:publishable_key] %>',
+    locale: 'auto',
+    name: 'Sejasa Auction',
+    token: function(token) {
+      $('input#stripeToken').val(token.id);
+      $('form').submit();
+    }
+  });
+
+  $('#bidButton').on('click', function(e) {
+    e.preventDefault();
+
+    $('#error_explanation').html('');
+
+    var amount = $('input#amount').val();
+    amount = amount.replace(/\$/g, '').replace(/\,/g, '')
+
+    amount = parseFloat(amount);
+
+    if (isNaN(amount)) {
+      $('#error_explanation').html('<p>Please enter a valid amount.</p>');
+    }
+    else if (amount < 5.00) {
+      $('#error_explanation').html('<p>Donation amount must be at least $5.</p>');
+    }
+    else {
+      amount = amount; // Needs to be an integer!
+      handler.open({
+        amount: Math.round(amount)
+      })
+    }
+  });
+</script>

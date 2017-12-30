@@ -1,0 +1,21 @@
+<div class="container">
+  <h3>
+    <%= t('.title') %>
+  </h3>
+  <% if @bids.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>End Time</th>
+          <th>Your Bid Amount</th>
+          <th>Win Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: @bids %>
+      </tbody>
+    </table>
+    <%= will_paginate @bids %>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<tr>
+  <td>
+    <%= product.name %>
+  </td>
+  <td>
+    <%= l product.start_time, format: :datetime if product.start_time %>
+  </td>
+  <td>
+    <%= l product.end_time, format: :datetime if product.end_time %>
+  </td>
+
+  <td>
+    <%= product.price %>
+  </td>
+  <td>
+    <%= link_to "Detail", page_path(product), class: 'btn btn-primary' %>
+  </td>
+</tr>

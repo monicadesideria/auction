@@ -1,0 +1,51 @@
+<div class="container">
+  <p>
+    <%= link_to "Edit", edit_product_path(@product), class: 'btn btn-info' %>
+    <%= link_to "Delete", product_path(@product), method: :delete, data: {confirm: t('confirm_action')}, class: 'btn btn-info' %>
+  </p>
+
+  <table class="table">
+    <tr>
+      <td>Product Name</td>
+      <td><%= @product.name %></td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td><%= @product.price %></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td><%= @product.detail %></td>
+    </tr>
+    <tr>
+      <td>Start Time</td>
+      <td><%= l @product.start_time, format: :datetime if @product.start_time %></td>
+    </tr>
+    <tr>
+      <td>End Time</td>
+      <td><%= l @product.end_time, format: :datetime if @product.end_time %></td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td><%= translate_status(@product.status) %></td>
+    </tr>
+    <tr>
+      <td><%= t('.table.images') %></td>
+      <td>
+        <table class="table">
+          <tr>
+            <% @product.images.each do |image| %>
+                <td>
+                  <div class="image-wrapper">
+                    <%= image_tag image.thumb.url %>
+                  </div>
+                </td>
+            <% end %>
+          </tr>
+      </table>
+      </td>
+    </tr>
+   
+  </table>
+</div>
+

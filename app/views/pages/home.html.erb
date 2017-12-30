@@ -1,0 +1,33 @@
+<div class="container">
+  <%= search_form_for @q, url: home_path do |f| %>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= f.label :start_time_gteq , "Start Date"%>
+        <%= f.text_field :start_time_gteq, class: 'start_time_picker form-control' %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= f.label :end_time_lteq , "Start Date"%>
+        <%= f.text_field :end_time_lteq, class: 'end_time_picker form-control' %>
+      </div>
+    </div>
+    <%= f.submit "search" %>
+  <%end%>
+  <% if @products.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'pages/product', collection: @products %>
+      </tbody>
+    </table>
+    <%= will_paginate @products %>
+  <% end %>
+</div>

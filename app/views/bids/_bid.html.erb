@@ -1,0 +1,14 @@
+<tr>
+  <td>
+    <%= bid.product.name %>
+  </td>
+  <td>
+    <%= l bid.product.end_time, format: :datetime if bid.product.end_time %>
+  </td>
+  <td>
+    <%= bid.amount %>
+  </td>
+  <td>
+  	<%= bid.win_status %>
+  </td>
+</tr>

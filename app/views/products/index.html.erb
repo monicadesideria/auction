@@ -1,0 +1,23 @@
+<div class="container">
+  <p>
+    <%= link_to "Create new product", new_product_path, class: 'btn btn-primary' %>
+  </p>
+  <% if @products.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: @products %>
+      </tbody>
+    </table>
+    <%= will_paginate @products %>
+  <% end %>
+</div>
